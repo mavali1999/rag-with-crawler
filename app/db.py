@@ -15,8 +15,11 @@ class WebPage(Base):
 
     id: Mapped[str] = mapped_column(String(255), primary_key=True)
     url: Mapped[str] = mapped_column(String(255))
+    save_location: Mapped[str] = mapped_column(String(255))
 
-    crawled_at: Mapped[datetime] = mapped_column(DateTime, default_factory=datetime.now)
+    # crawled_at: Mapped[datetime] = mapped_column(DateTime, default_factory=datetime.now)
 
 
 engine = create_engine(DB_URL, echo=True)
+
+Base.metadata.create_all(engine)
