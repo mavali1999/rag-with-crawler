@@ -20,6 +20,7 @@ langchain-community = "^0.3.27"
 openai = "^1.97.1"
 langchain-core = "^0.3.72"
 langchain-openai = "^0.3.28"
+langchain-chroma = "^0.2.5"
 
 
 [build-system]
