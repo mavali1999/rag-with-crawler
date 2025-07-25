@@ -6,6 +6,9 @@ import xml.etree.ElementTree as ET
 
 import requests
 from crawl4ai import AsyncWebCrawler, CrawlerRunConfig
+from sqlalchemy.orm import Session
+
+from app.db import WebPage, engine
 
 INDEX_LOCATION = "index"
 
@@ -67,8 +70,10 @@ async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) 
             ],
         ),
     )
+    markdown = result.markdown
+    assert isinstance(markdown, str)
     with open(save_location, "w") as f:
-        f.write(result.markdown)
+        f.write(markdown)
 
 
 async def main():
@@ -82,11 +87,19 @@ async def main():
         for entry in entries:
             url = entry["loc"]
             file_name = url_hash(url)
+            save_location = f"{INDEX_LOCATION}/{file_name}.md"
             await crawl_website(
                 crawler=crawler,
                 url=url,
-                save_location=f"{INDEX_LOCATION}/{file_name}.md",
+                save_location=save_location,
             )
+            with Session(engine) as session:
+                web_page = WebPage(
+                    id=id,
+                    url=url,
+                    save_location=save_location,
+                )
+                session.add(web_page)
 
 
 if __name__ == "__main__":
