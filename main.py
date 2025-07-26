@@ -1,4 +1,4 @@
 import asyncio
-from app.version1 import main
+from app.crawler_v1_crawl4ai import main
 
 asyncio.run(main())
