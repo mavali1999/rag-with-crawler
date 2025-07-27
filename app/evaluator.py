@@ -45,7 +45,8 @@ class Evaluator:
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt}
-            ]
+            ],
+            temperature=0.0
         )
         return response.choices[0].message.content
     
