@@ -37,10 +37,13 @@ def extract_sitemap_index_entries(sitemap_index_urls: list[str]):
             loc = url.find("ns:loc", ns).text
             lastmod_elem = url.find("ns:lastmod", ns)
             lastmod = lastmod_elem.text if lastmod_elem is not None else None
+            changefreq_elem = url.find("ns:changefreq", ns)
+            changefreq = changefreq_elem.text if changefreq_elem is not None else None
             entries.append(
                 {
                     "loc": loc,
                     "lastmod": lastmod,
+                    "changefreq": changefreq
                 }
             )
 
