@@ -1,5 +1,4 @@
 import asyncio
-import hashlib
 import os.path
 import random
 import xml.etree.ElementTree as ET
@@ -8,12 +7,9 @@ import requests
 from crawl4ai import AsyncWebCrawler, CrawlerRunConfig
 
 import config
+from url_normalizer import normalize_url
 
 INDEX_LOCATION = "index"
-
-
-def url_hash(url: str) -> str:
-    return hashlib.sha1(url.encode("utf-8")).hexdigest()
 
 
 def extract_sitemap_index_entries(sitemap_index_urls: list[str]):
@@ -85,7 +81,7 @@ async def main():
     async with AsyncWebCrawler() as crawler:
         for entry in entries:
             url = entry["loc"]
-            file_name = url_hash(url)
+            file_name = normalize_url(normalize_url)
             save_location = f"{INDEX_LOCATION}/{file_name}.md"
             await crawl_website(
                 crawler=crawler,
