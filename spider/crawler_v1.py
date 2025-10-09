@@ -1,6 +1,5 @@
 import asyncio
 import os
-import random
 import xml.etree.ElementTree as ET
 
 import requests
@@ -56,17 +55,22 @@ def save_file(save_location, markdown):
 
 async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) -> None:
     if os.path.isfile(save_location):
+        print('already_exists', save_location)
         return
     result = await crawler.arun(
         url=url,
         config=CrawlerRunConfig(
-            only_text=True,
-            exclude_all_images=True,
+
+            # Content
             exclude_external_links=True,
+            exclude_all_images=True,
+            # css_selector="main.content",
+        
+            only_text=True,
             exclude_internal_links=True,
             exclude_social_media_links=True,
             remove_forms=True,
-            scan_full_page=True,
+            # scan_full_page=True,
             excluded_tags=[
                 "form",
                 "header",
@@ -74,8 +78,9 @@ async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) 
                 "nav",
                 "span",
                 "label",
-            ],
-        ),
+                "a"
+            ]
+        )
     )
     markdown = result.markdown
     save_file(save_location=save_location, markdown=markdown)
