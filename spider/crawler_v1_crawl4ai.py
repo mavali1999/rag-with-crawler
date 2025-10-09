@@ -6,9 +6,6 @@ import xml.etree.ElementTree as ET
 
 import requests
 from crawl4ai import AsyncWebCrawler, CrawlerRunConfig
-from sqlalchemy.orm import Session
-
-from app.db import WebPage, engine
 
 INDEX_LOCATION = "index"
 
@@ -95,13 +92,6 @@ async def main():
                 url=url,
                 save_location=save_location,
             )
-            with Session(engine) as session:
-                web_page = WebPage(
-                    id=id,
-                    url=url,
-                    save_location=save_location,
-                )
-                session.add(web_page)
 
 
 if __name__ == "__main__":
