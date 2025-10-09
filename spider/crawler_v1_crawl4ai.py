@@ -7,6 +7,8 @@ import xml.etree.ElementTree as ET
 import requests
 from crawl4ai import AsyncWebCrawler, CrawlerRunConfig
 
+import config
+
 INDEX_LOCATION = "index"
 
 
@@ -77,9 +79,7 @@ async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) 
 
 
 async def main():
-    sitemap_index_urls = [
-        "https://www.itrc.ac.ir/sitemap.xml",
-    ]
+    sitemap_index_urls = config.SEED_SITES
     entries = extract_sitemap_index_entries(sitemap_index_urls)
     random.shuffle(entries)
     async with AsyncWebCrawler() as crawler:
