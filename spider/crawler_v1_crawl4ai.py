@@ -78,7 +78,7 @@ async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) 
 
 async def main():
     sitemap_index_urls = [
-        "https://www.varzesh3.com/sitemap.xml",
+        "https://www.itrc.ac.ir/sitemap.xml",
     ]
     entries = extract_sitemap_index_entries(sitemap_index_urls)
     random.shuffle(entries)

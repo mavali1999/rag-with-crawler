@@ -27,6 +27,6 @@ def count_sitemap_pages(sitemap_url):
         return 0
 
 # Example usage
-sitemap_url = "https://www.tasnimnews.com/_sitemap.xml"
+sitemap_url = "https://www.itrc.ac.ir/sitemap.xml"
 total_pages = count_sitemap_pages(sitemap_url)
 print(f"Total pages in sitemap(s): {total_pages}")
