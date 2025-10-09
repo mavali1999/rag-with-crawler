@@ -1,5 +1,5 @@
 import asyncio
-import os.path
+import os
 import random
 import xml.etree.ElementTree as ET
 
@@ -45,6 +45,15 @@ def extract_sitemap_index_entries(sitemap_index_urls: list[str]):
     return entries
 
 
+def save_file(save_location, markdown):
+
+    assert isinstance(markdown, str)
+
+    os.makedirs(os.path.dirname(save_location), exist_ok=True)
+    with open(save_location, "w") as f:
+        f.write(markdown)
+
+
 async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) -> None:
     if os.path.isfile(save_location):
         return
@@ -69,24 +78,20 @@ async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) 
         ),
     )
     markdown = result.markdown
-    assert isinstance(markdown, str)
-    with open(save_location, "w") as f:
-        f.write(markdown)
+    save_file(save_location=save_location, markdown=markdown)
 
 
 async def main():
     sitemap_index_urls = config.SEED_SITES
     entries = extract_sitemap_index_entries(sitemap_index_urls)
-    random.shuffle(entries)
     async with AsyncWebCrawler() as crawler:
         for entry in entries:
             url = entry["loc"]
-            file_name = normalize_url(normalize_url)
-            save_location = f"{INDEX_LOCATION}/{file_name}.md"
+            file_path = "../" + INDEX_LOCATION + '/' + normalize_url(url) + '.md'
             await crawl_website(
                 crawler=crawler,
                 url=url,
-                save_location=save_location,
+                save_location=file_path,
             )
 
 
