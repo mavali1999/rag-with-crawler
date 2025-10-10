@@ -54,7 +54,6 @@ def save_file(save_location, markdown):
 
 async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) -> None:
     if os.path.isfile(save_location):
-        print('already_exists', save_location)
         return
     
     result = await crawler.arun(
