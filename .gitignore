@@ -211,3 +211,4 @@ __marimo__/
 # Our ignores
 index/
 __*
+.DS_Store

@@ -88,6 +88,7 @@ async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) 
 async def main():
     sitemap_index_urls = config.SEED_SITES
     entries = extract_sitemap_index_entries(sitemap_index_urls)
+    entries = entries[::-1]
     async with AsyncWebCrawler() as crawler:
         for entry in entries:
             url = entry["loc"]
