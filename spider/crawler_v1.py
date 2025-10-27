@@ -48,7 +48,7 @@ def save_file(save_location, markdown):
 
     assert isinstance(markdown, str)
     os.makedirs(os.path.dirname(save_location), exist_ok=True)
-    with open(save_location, "w") as f:
+    with open(save_location, "w", encoding='utf-8') as f:
         f.write(markdown)
 
 
