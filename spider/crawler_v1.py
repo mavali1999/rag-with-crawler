@@ -44,9 +44,11 @@ def extract_sitemap_index_entries(sitemap_index_urls: list[str]):
     return entries
 
 
-def save_file(save_location, markdown):
+def save_markdown(save_location, markdown):
 
     assert isinstance(markdown, str)
+
+    save_location += ".md"
     os.makedirs(os.path.dirname(save_location), exist_ok=True)
     with open(save_location, "w", encoding='utf-8') as f:
         f.write(markdown)
@@ -82,7 +84,7 @@ async def crawl_website(crawler: AsyncWebCrawler, url: str, save_location: str) 
         )
     )
     markdown = result.markdown
-    save_file(save_location=save_location, markdown=markdown)
+    save_markdown(save_location=save_location, markdown=markdown)
 
 
 async def main():
@@ -92,7 +94,7 @@ async def main():
     async with AsyncWebCrawler() as crawler:
         for entry in entries:
             url = entry["loc"]
-            file_path = "./" + INDEX_LOCATION + '/' + normalize_url(url) + '.md'
+            file_path = "./" + INDEX_LOCATION + '/' + normalize_url(url)
             await crawl_website(
                 crawler=crawler,
                 url=url,
